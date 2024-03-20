@@ -1,12 +1,14 @@
 import webpack from 'webpack'
 import path from 'path'
 import { buildWebpack } from './config/build/buildWebpack'
-import { TBuildMode } from './config/build/types/types'
+import { TBuildMode, TBuildPlatform } from './config/build/types/types'
 
 interface IEnvVariables {
-	mode: TBuildMode
-	port: number
+	mode?: TBuildMode
+	port?: number
 	analyze: boolean
+	//12-й шаг добавляем глобальны переменные сборки
+	platform?: TBuildPlatform
 }
 
 export default (env: IEnvVariables) => {
@@ -27,6 +29,7 @@ export default (env: IEnvVariables) => {
 		port: env.port ?? 3000,
 		paths,
 		analyze: env.analyze,
+		platform: env.platform ?? 'desktop',
 	})
 	return config
 }

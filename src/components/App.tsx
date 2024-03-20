@@ -4,7 +4,23 @@ import AvatarJpg from '@/assets/avatar.jpg'
 import Image from '@/assets/app-image.svg'
 
 import styles from './App.module.scss'
+const funnnnn = () => {
+	console.log('TREE SHAKING')
+}
 export const App = () => {
+	//шаг 12-й глобальные переменные
+	// if (__PLATFORM__ === 'desktop') {
+	// 	funnnnn()
+	// 	return <h2>IS DESKTOP</h2>
+	// }
+	// if (__PLATFORM__ === 'mobile') {
+	// 	return <h2>IS MOBILE</h2>
+	// }
+	// if (__ENV_BUILD__ === 'development') {
+	// 	//как пример
+	// 	//devTools()
+	// }
+
 	return (
 		<>
 			<div className={styles.root}>
@@ -20,6 +36,7 @@ export const App = () => {
 				<div>
 					<Image style={{ color: 'green' }} width={50} height={50} />
 				</div>
+				<h2>Platform= {__PLATFORM__}</h2>
 			</div>
 		</>
 	)

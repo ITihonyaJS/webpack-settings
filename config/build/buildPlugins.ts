@@ -1,4 +1,4 @@
-import webpack, { Configuration } from 'webpack'
+import webpack, { Configuration, DefinePlugin } from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 //анализирует размер главного bandle.js(build/main.....js)
@@ -9,6 +9,7 @@ export const buildPlugins = ({
 	mode,
 	paths,
 	analyze,
+	platform,
 }: IBuildOptions): Configuration['plugins'] => {
 	const isDev = mode === 'development'
 	const isProd = mode === 'production'
@@ -18,6 +19,12 @@ export const buildPlugins = ({
 			//путь до основного html файла(id root)
 			// template: path.resolve(__dirname, 'public', 'index.html'),
 			template: paths.html,
+		}),
+		//12-й шаг глобальные переменные
+		//называем как то по особенному(например __PLATFORM__),чтобы они ото всех др. переменных отличались
+		new DefinePlugin({
+			//обязательно JSON.stringify()...хоть это и строка
+			__PLATFORM__: JSON.stringify(platform),
 		}),
 	]
 	if (isDev) {

@@ -19,3 +19,9 @@ declare module '*.svg' {
 	const SVG: React.VFC<React.SVGProps<SVGSVGElement>>
 	export default SVG
 }
+
+//12-й шаг Глобальные переменные
+//обязательно нужно объявить и задекларировать здесь,чтобы они были видны отовсюду
+declare const __PLATFORM__: 'desktop' | 'mobile'
+//как пример можно добавить ещё такую переменную и в зависимости от неё что то добавлять или нет в проект
+declare const __ENV_BUILD__: 'development' | 'production'
