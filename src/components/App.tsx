@@ -35,7 +35,7 @@ export const App = () => {
 				<img width={100} height={100} src={AvatarPng} alt='png'></img>
 				<img width={100} height={100} src={AvatarJpg} alt='jpg'></img>
 				<div>
-					<Image style={{ color: 'green' }} width={50} height={50} />
+					<Image style={{ color: 'red' }} width={50} height={50} />
 				</div>
 				<h2>Platform= {__PLATFORM__}</h2>
 			</div>

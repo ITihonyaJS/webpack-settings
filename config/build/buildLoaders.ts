@@ -1,4 +1,5 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import ReactRefreshTypeScript from 'react-refresh-typescript'
 import { ModuleOptions } from 'webpack'
 import { IBuildOptions } from './types/types'
 
@@ -81,6 +82,10 @@ export const buildLoaders = (
 					//проверка типов...можно сделать что проверка будет только в dev режиме
 					// transpileOnly: true,
 					transpileOnly: isDev,
+					//14-й шаг Внесение изменений в код без перезагрузки страницы (Hot Module Replacement
+					getCustomTransformers: () => ({
+						before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+					}),
 				},
 			},
 		],

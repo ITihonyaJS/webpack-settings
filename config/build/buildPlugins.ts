@@ -4,6 +4,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 //анализирует размер главного bandle.js(build/main.....js)
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import { IBuildOptions } from './types/types'
 
 export const buildPlugins = ({
@@ -34,6 +35,8 @@ export const buildPlugins = ({
 
 		//шаг 13-й Проверка типов TS.Выносим проверку типов в отдельный процесс тем самым не замедляем сборку проекта + показываем в консоле место где есть несоответствие типов
 		plugins.push(new ForkTsCheckerWebpackPlugin())
+		//шаг-14 Внесение изменений в код без перезагрузки страницы (Hot Module Replacement
+		plugins.push(new ReactRefreshWebpackPlugin())
 	}
 	if (isProd) {
 		//8-й шаг устанавливаем плагин чтобы вынести scss файлы при сборке в отдельную папку и файл для удобства
