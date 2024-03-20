@@ -6,6 +6,37 @@ export const buildLoaders = (
 	options: IBuildOptions
 ): ModuleOptions['rules'] => {
 	const isDev = options.mode === 'development'
+
+	//шаг-11-й устанавливаем loader для обработки svg изображений(asset)
+	//options: { icon: true } нужен для того чтобы работать с svg как с иконками(менять размеры...)
+	const svgLoader = {
+		test: /\.svg$/i,
+		issuer: /\.[jt]sx?$/,
+		use: [
+			{
+				loader: '@svgr/webpack',
+				options: {
+					icon: true,
+					svgoConfig: {
+						plugins: [
+							{
+								name: 'convertColors',
+								params: {
+									currentColor: true,
+								},
+							},
+						],
+					},
+				},
+			},
+		],
+	}
+
+	//шаг 10-й устанавливаем loader для обработки изображений(asset)
+	const assetLoader = {
+		test: /\.(png|jpg|jpeg|gif)$/i,
+		type: 'asset/resource',
+	}
 	//шаг 9-й устанавливаем и настраиваем работу с scss module
 	const cssLoaderWithModules = {
 		loader: 'css-loader',
@@ -39,5 +70,5 @@ export const buildLoaders = (
 	}
 
 	//порядок важен!!!
-	return [scssLoader, tsLoader]
+	return [svgLoader, assetLoader, scssLoader, tsLoader]
 }
