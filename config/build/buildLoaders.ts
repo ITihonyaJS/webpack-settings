@@ -63,9 +63,27 @@ export const buildLoaders = (
 		}
 	//ts-loader умеет работать с jsx
 	//если бы мы не использ typescript, ещ пришлось бы кстанавливать babel-loader
+	//loader без проверки типов
+	// const tsLoader = {
+	// 	test: /\.tsx?$/,
+	// 	use: 'ts-loader',
+	// 	exclude: /node_modules/,
+	// }
+
+	//13-й шаг проверка типов при сборке
+	//loader с проверкой типов
 	const tsLoader = {
 		test: /\.tsx?$/,
-		use: 'ts-loader',
+		use: [
+			{
+				loader: 'ts-loader',
+				options: {
+					//проверка типов...можно сделать что проверка будет только в dev режиме
+					// transpileOnly: true,
+					transpileOnly: isDev,
+				},
+			},
+		],
 		exclude: /node_modules/,
 	}
 

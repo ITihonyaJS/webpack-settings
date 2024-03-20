@@ -4,10 +4,11 @@ import AvatarJpg from '@/assets/avatar.jpg'
 import Image from '@/assets/app-image.svg'
 
 import styles from './App.module.scss'
-const funnnnn = () => {
+const funTest = (a: number) => {
 	console.log('TREE SHAKING')
 }
 export const App = () => {
+	funTest(123)
 	//шаг 12-й глобальные переменные
 	// if (__PLATFORM__ === 'desktop') {
 	// 	funnnnn()

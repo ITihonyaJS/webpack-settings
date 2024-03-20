@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 //анализирует размер главного bandle.js(build/main.....js)
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { IBuildOptions } from './types/types'
 
 export const buildPlugins = ({
@@ -30,6 +31,9 @@ export const buildPlugins = ({
 	if (isDev) {
 		//default плагин для отображения процесса сборки в процентах.new указываем для того чтобы нам получить объект.В продакшене не рекменд,т.к. сильно замедляет сборку!!!
 		plugins.push(new webpack.ProgressPlugin())
+
+		//шаг 13-й Проверка типов TS.Выносим проверку типов в отдельный процесс тем самым не замедляем сборку проекта + показываем в консоле место где есть несоответствие типов
+		plugins.push(new ForkTsCheckerWebpackPlugin())
 	}
 	if (isProd) {
 		//8-й шаг устанавливаем плагин чтобы вынести scss файлы при сборке в отдельную папку и файл для удобства
