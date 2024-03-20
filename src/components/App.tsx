@@ -24,7 +24,7 @@ export const App = () => {
 
 	return (
 		<>
-			<div className={styles.root}>
+			<div className={styles.root} data-testid={'App.DataTestId'}>
 				<Link to='/about'>About</Link>
 				<br />
 				<Link to='/shop'>Shop</Link>
@@ -37,7 +37,7 @@ export const App = () => {
 				<div>
 					<Image style={{ color: 'red' }} width={50} height={50} />
 				</div>
-				<h2>Platform= {__PLATFORM__}</h2>
+				<h2 data-testid={'Platform.DataTestId'}>Platform= {__PLATFORM__}</h2>
 			</div>
 		</>
 	)

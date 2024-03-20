@@ -2,6 +2,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import ReactRefreshTypeScript from 'react-refresh-typescript'
 import { ModuleOptions } from 'webpack'
 import { IBuildOptions } from './types/types'
+import { buildBabelLoader } from './babel/buildBabelLoader'
 
 export const buildLoaders = (
 	options: IBuildOptions
@@ -71,8 +72,8 @@ export const buildLoaders = (
 	// 	exclude: /node_modules/,
 	// }
 
-	//13-й шаг проверка типов при сборке
-	//loader с проверкой типов
+	// 13-й шаг проверка типов при сборке
+	// loader с проверкой типов
 	const tsLoader = {
 		test: /\.tsx?$/,
 		use: [
@@ -92,6 +93,15 @@ export const buildLoaders = (
 		exclude: /node_modules/,
 	}
 
+	//шаг 16 Для общего развития вместо ts-loader заиспользуем babel(инструмент который отвечает за компиляцию файлом js,ts и т.п.)
+	const babelLoader = buildBabelLoader(options)
+
 	//порядок важен!!!
-	return [svgLoader, assetLoader, scssLoader, tsLoader]
+	return [
+		assetLoader,
+		scssLoader,
+		babelLoader,
+		// tsLoader,
+		svgLoader,
+	]
 }
