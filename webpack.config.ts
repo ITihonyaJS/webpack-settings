@@ -22,6 +22,9 @@ export default (env: IEnvVariables) => {
 		html: path.resolve(__dirname, 'public', 'index.html'),
 		//путь для alias ('@')
 		src: path.resolve(__dirname, 'src'),
+		//шаг 15-й работа с папкой public(например favicon)
+		//путь до папки public, например нужен для отображения favicon
+		public: path.resolve(__dirname, 'public'),
 	}
 
 	const config: webpack.Configuration = buildWebpack({

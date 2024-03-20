@@ -1,11 +1,13 @@
 import webpack, { Configuration, DefinePlugin } from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import CopyPlugin from 'copy-webpack-plugin'
 //анализирует размер главного bandle.js(build/main.....js)
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import { IBuildOptions } from './types/types'
+import path from 'path'
 
 export const buildPlugins = ({
 	mode,
@@ -21,6 +23,9 @@ export const buildPlugins = ({
 			//путь до основного html файла(id root)
 			// template: path.resolve(__dirname, 'public', 'index.html'),
 			template: paths.html,
+			//шаг 15-й работа с папкой public(например favicon)
+			//путь до favicon в папке public
+			favicon: path.resolve(paths.public, 'favicon.ico'),
 		}),
 		//12-й шаг глобальные переменные
 		//называем как то по особенному(например __PLATFORM__),чтобы они ото всех др. переменных отличались
@@ -45,6 +50,17 @@ export const buildPlugins = ({
 				//добавляем опции,например для того как будут выглядеть файлы сcss после сборки
 				filename: 'css/[name].[contenthash:8].css',
 				chunkFilename: 'css/[name].[contenthash:8].css',
+			})
+		)
+		//шаг 15-й копируем файлы например переводов в bundle при prod сборке и кладём всё в отдельную папочку для удобства(locales)
+		plugins.push(
+			new CopyPlugin({
+				patterns: [
+					{
+						from: path.resolve(paths.public, 'locales'),
+						to: path.resolve(paths.output, 'locales'),
+					},
+				],
 			})
 		)
 	}
