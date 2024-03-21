@@ -9,15 +9,24 @@ export const removeDataTestIdPlugin = (): PluginItem => {
 	return {
 		visitor: {
 			Program(path, state) {
-				//те элементы(props) которые нужно недопустить в прод сборку(data-testid)
+				/*те элементы(props) которые нужно недопустить в прод сборку(например элемент с атрибутом data-testid) и передаём название атрибута в props у плагина [
+					removeDataTestIdPlugin,
+					{
+						//это и есть наши запрещённые пропсы(forbiddenProps)(идентификаторы)
+						props: ['data-testid'],
+					},
+				]	*/
+				//это строка помещённая в массив ['data-testid']
 				const forbiddenProps = state.opts.props || []
 				//ищем наши data-testid
 				path.traverse({
 					JSXIdentifier(current) {
-						//ищем ноду,чтобы убедится что это именно data-testid
+						//ищем ноду(атрибут у элемента),чтобы убедится что это именно data-testid
+						//название атрибута элемента
 						const nodeName = current.node.name
+						//проверяем есть ли в массиве props кот.мы передали в плагин, атрибут с таким же названием
 						if (forbiddenProps.includes(nodeName)) {
-							//если убедились и нашли...удаляем
+							//если нашли...удаляем этот атрибут
 							current.parentPath.remove()
 						}
 					},
